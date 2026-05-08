@@ -1,0 +1,44 @@
+CREATE DATABASE BankingDB;
+
+USE BankingDB;
+
+CREATE TABLE Accounts (
+    account_id INT PRIMARY KEY,
+    account_holder VARCHAR(50),
+    balance INT
+);
+
+INSERT INTO Accounts VALUES
+(101, 'Rahul', 50000),
+(102, 'Priya', 40000),
+(103, 'Amit', 35000),
+(104, 'Sneha', 45000),
+(105, 'Rohit', 30000);
+
+START TRANSACTION;
+
+UPDATE Accounts
+SET balance = balance - 5000
+WHERE account_id = 101;
+
+SAVEPOINT transfer_point;
+
+UPDATE Accounts
+SET balance = balance + 5000
+WHERE account_id = 102;
+
+ROLLBACK TO transfer_point;
+
+UPDATE Accounts
+SET balance = balance + 5000
+WHERE account_id = 103;
+
+COMMIT;
+
+GRANT SELECT
+ON Accounts
+TO 'student_user';
+
+REVOKE UPDATE
+ON Accounts
+FROM 'student_user';
