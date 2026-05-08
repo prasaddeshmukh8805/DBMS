@@ -1,0 +1,56 @@
+CREATE DATABASE CollegeDB;
+
+USE CollegeDB;
+
+CREATE TABLE Courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(50)
+);
+
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(50),
+    course_id INT,
+    marks INT,
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+INSERT INTO Courses VALUES
+(1, 'Computer Engineering'),
+(2, 'Mechanical Engineering'),
+(3, 'Civil Engineering'),
+(4, 'Electrical Engineering'),
+(5, 'Information Technology');
+
+INSERT INTO Students VALUES
+(101, 'Rahul', 1, 85),
+(102, 'Priya', 2, 72),
+(103, 'Amit', 1, 90),
+(104, 'Sneha', 3, 68),
+(105, 'Rohit', 4, 75),
+(106, 'Pooja', 5, 80),
+(107, 'Karan', 1, 88),
+(108, 'Neha', 2, 70);
+
+SELECT student_name
+FROM Students
+WHERE course_id = (
+    SELECT course_id
+    FROM Courses
+    WHERE course_name = 'Computer Engineering'
+);
+
+SELECT student_name, marks
+FROM Students
+WHERE marks > (
+    SELECT AVG(marks)
+    FROM Students
+);
+
+SELECT student_name
+FROM Students
+WHERE course_id = (
+    SELECT course_id
+    FROM Students
+    WHERE student_name = 'Amit'
+);
