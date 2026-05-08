@@ -1,0 +1,52 @@
+CREATE DATABASE LibraryDB;
+
+USE LibraryDB;
+
+CREATE TABLE Books (
+    book_id INT PRIMARY KEY,
+    book_name VARCHAR(50),
+    author VARCHAR(50)
+);
+
+CREATE TABLE Issue_Table (
+    issue_id INT PRIMARY KEY,
+    book_id INT,
+    student_name VARCHAR(50),
+    issue_date DATE,
+    FOREIGN KEY (book_id) REFERENCES Books(book_id)
+);
+
+INSERT INTO Books VALUES
+(101, 'DBMS', 'Korth'),
+(102, 'Java', 'James Gosling'),
+(103, 'Python', 'Guido'),
+(104, 'C Programming', 'Dennis Ritchie'),
+(105, 'Web Development', 'John Duckett');
+
+INSERT INTO Issue_Table VALUES
+(1, 101, 'Rahul', '2026-01-10'),
+(2, 102, 'Priya', '2026-01-11'),
+(3, 103, 'Amit', '2026-01-12'),
+(4, 101, 'Sneha', '2026-01-13'),
+(5, 104, 'Rohit', '2026-01-14');
+
+SELECT Books.book_id, Books.book_name, Issue_Table.student_name
+FROM Books
+INNER JOIN Issue_Table
+ON Books.book_id = Issue_Table.book_id;
+
+SELECT Books.book_id, Books.book_name, Issue_Table.student_name
+FROM Books
+LEFT JOIN Issue_Table
+ON Books.book_id = Issue_Table.book_id;
+
+SELECT Books.book_id, Books.book_name, Issue_Table.student_name
+FROM Books
+RIGHT JOIN Issue_Table
+ON Books.book_id = Issue_Table.book_id;
+
+CREATE VIEW Current_Issued_Books AS
+SELECT Books.book_id, Books.book_name, Issue_Table.student_name
+FROM Books
+INNER JOIN Issue_Table
+ON Books.book_id = Issue_Table.book_id;
