@@ -1,0 +1,79 @@
+CREATE DATABASE StudentCourseDB;
+
+USE StudentCourseDB;
+
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(50) NOT NULL,
+    age INT CHECK (age >= 18),
+    city VARCHAR(50)
+);
+
+CREATE TABLE Courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(50) NOT NULL UNIQUE,
+    fees INT
+);
+
+CREATE TABLE Enrollments (
+    enrollment_id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    enrollment_date DATE NOT NULL,
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+INSERT INTO Students VALUES
+(1, 'Rahul', 20, 'Nashik'),
+(2, 'Priya', 21, 'Pune'),
+(3, 'Amit', 22, 'Mumbai'),
+(4, 'Sneha', 19, 'Nagpur'),
+(5, 'Rohit', 23, 'Aurangabad');
+
+INSERT INTO Courses VALUES
+(101, 'DBMS', 5000),
+(102, 'Java', 6000),
+(103, 'Python', 7000),
+(104, 'Web Development', 8000),
+(105, 'Data Science', 9000);
+
+INSERT INTO Enrollments VALUES
+(1001, 1, 101, '2026-01-10'),
+(1002, 2, 102, '2026-01-11'),
+(1003, 3, 103, '2026-01-12'),
+(1004, 4, 104, '2026-01-13'),
+(1005, 5, 105, '2026-01-14');
+
+ALTER TABLE Students
+ADD email VARCHAR(100) UNIQUE;
+
+UPDATE Students
+SET email = 'rahul@gmail.com'
+WHERE student_id = 1;
+
+UPDATE Students
+SET email = 'priya@gmail.com'
+WHERE student_id = 2;
+
+UPDATE Students
+SET email = 'amit@gmail.com'
+WHERE student_id = 3;
+
+UPDATE Students
+SET email = 'sneha@gmail.com'
+WHERE student_id = 4;
+
+UPDATE Students
+SET email = 'rohit@gmail.com'
+WHERE student_id = 5;
+
+CREATE TABLE TempTable (
+    id INT
+);
+
+RENAME TABLE Courses TO Course_Details;
+
+DROP TABLE TempTable;
+
+TRUNCATE TABLE Enrollments;
