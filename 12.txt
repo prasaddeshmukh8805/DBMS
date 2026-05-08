@@ -1,0 +1,45 @@
+use StudentDB
+
+db.students.insertOne({
+    name: "Rahul",
+    age: 20,
+    course: "Computer Engineering"
+})
+
+db.students.insertMany([
+    {
+        name: "Priya",
+        age: 22,
+        course: "IT"
+    },
+    {
+        name: "Amit",
+        age: 23,
+        course: "Mechanical"
+    },
+    {
+        name: "Sneha",
+        age: 19,
+        course: "Civil"
+    },
+    {
+        name: "Rohit",
+        age: 24,
+        course: "Electrical"
+    }
+])
+
+db.students.find()
+
+db.students.find({
+    age: { $gt: 21 }
+})
+
+db.students.updateOne(
+    { name: "Rahul" },
+    { $set: { age: 21 } }
+)
+
+db.students.deleteMany({
+    age: { $lt: 21 }
+})
