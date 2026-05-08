@@ -1,0 +1,48 @@
+CREATE DATABASE BankDB;
+
+USE BankDB;
+
+CREATE TABLE Bank (
+    acc_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    balance INT
+);
+
+INSERT INTO Bank VALUES
+(101, 'Rahul', 5000),
+(102, 'Priya', 7000),
+(103, 'Amit', 6000),
+(104, 'Sneha', 8000),
+(105, 'Rohit', 9000);
+
+DELIMITER //
+
+CREATE TRIGGER set_balance_zero
+BEFORE INSERT ON Bank
+FOR EACH ROW
+BEGIN
+    IF NEW.balance IS NULL THEN
+        SET NEW.balance = 0;
+    END IF;
+END //
+
+CREATE TRIGGER prevent_negative_balance
+BEFORE UPDATE ON Bank
+FOR EACH ROW
+BEGIN
+    IF NEW.balance < 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Balance cannot be negative';
+    END IF;
+END //
+
+DELIMITER ;
+
+INSERT INTO Bank VALUES
+(106, 'Pooja', NULL);
+
+SELECT * FROM Bank;
+
+UPDATE Bank
+SET balance = -500
+WHERE acc_id = 101;
