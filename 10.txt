@@ -1,0 +1,57 @@
+CREATE DATABASE EmployeeDB;
+
+USE EmployeeDB;
+
+CREATE TABLE Employee (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    salary INT
+);
+
+INSERT INTO Employee VALUES
+(1, 'Rahul', 30000),
+(2, 'Priya', 35000),
+(3, 'Amit', 28000),
+(4, 'Sneha', 40000),
+(5, 'Rohit', 32000);
+
+SELECT * FROM Employee;
+
+DELIMITER //
+
+CREATE PROCEDURE IncreaseSalary()
+BEGIN
+    DECLARE done INT DEFAULT 0;
+    DECLARE emp_id INT;
+
+    DECLARE emp_cursor CURSOR FOR
+    SELECT id FROM Employee;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND
+    SET done = 1;
+
+    OPEN emp_cursor;
+
+    read_loop: LOOP
+
+        FETCH emp_cursor INTO emp_id;
+
+        IF done = 1 THEN
+            LEAVE read_loop;
+        END IF;
+
+        UPDATE Employee
+        SET salary = salary + 1000
+        WHERE id = emp_id;
+
+    END LOOP;
+
+    CLOSE emp_cursor;
+
+END //
+
+DELIMITER ;
+
+CALL IncreaseSalary();
+
+SELECT * FROM Employee;
