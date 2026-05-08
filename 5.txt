@@ -1,0 +1,30 @@
+CREATE DATABASE SalesDB;
+
+USE SalesDB;
+
+CREATE TABLE Sales (
+    product_id INT,
+    amount INT,
+    region VARCHAR(50)
+);
+
+INSERT INTO Sales VALUES
+(101, 2000, 'North'),
+(102, 3000, 'North'),
+(103, 1500, 'South'),
+(104, 4000, 'East'),
+(105, 2500, 'West'),
+(106, 3500, 'South'),
+(107, 4500, 'East');
+
+SELECT region, SUM(amount) AS total_sales
+FROM Sales
+GROUP BY region;
+
+SELECT AVG(amount) AS average_sales
+FROM Sales;
+
+SELECT region, SUM(amount) AS total_sales
+FROM Sales
+GROUP BY region
+HAVING SUM(amount) > 5000;
