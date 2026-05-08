@@ -1,0 +1,34 @@
+CREATE DATABASE StudentDB;
+
+USE StudentDB;
+
+CREATE TABLE Marks (
+    student_id INT,
+    student_name VARCHAR(50),
+    subject VARCHAR(50),
+    marks INT
+);
+
+INSERT INTO Marks VALUES
+(1, 'Rahul', 'DBMS', 85),
+(2, 'Priya', 'Java', 72),
+(3, 'Amit', 'Python', 68),
+(4, 'Sneha', 'DBMS', 90),
+(5, 'Rohit', 'Java', 75),
+(6, 'Pooja', 'Python', 80),
+(7, 'Karan', 'DBMS', 65);
+
+SELECT 
+MAX(marks) AS highest_marks,
+MIN(marks) AS lowest_marks,
+AVG(marks) AS average_marks
+FROM Marks;
+
+SELECT subject, COUNT(student_id) AS total_students
+FROM Marks
+GROUP BY subject;
+
+SELECT subject, AVG(marks) AS average_marks
+FROM Marks
+GROUP BY subject
+HAVING AVG(marks) > 70;
