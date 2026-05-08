@@ -1,0 +1,44 @@
+CREATE DATABASE EmployeeDB;
+
+USE EmployeeDB;
+
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    department VARCHAR(50),
+    salary INT
+);
+
+INSERT INTO Employee VALUES
+(1, 'Rahul', 'IT', 30000),
+(2, 'Priya', 'HR', 25000),
+(3, 'Amit', 'Sales', 28000),
+(4, 'Sneha', 'IT', 35000),
+(5, 'Rohit', 'Marketing', 27000);
+
+UPDATE Employee
+SET salary = salary + (salary * 10 / 100);
+
+DELETE FROM Employee
+WHERE emp_id = 5;
+
+SELECT emp_name, salary, salary + 5000 AS bonus_salary
+FROM Employee;
+
+SELECT *
+FROM Employee
+WHERE department = 'IT' AND salary > 30000;
+
+SELECT *
+FROM Employee
+WHERE department = 'HR' OR salary > 32000;
+
+SELECT *
+FROM Employee
+WHERE emp_name LIKE 'R%';
+
+SELECT UPPER(emp_name) AS employee_name
+FROM Employee;
+
+SELECT emp_name, LENGTH(emp_name) AS name_length
+FROM Employee;
