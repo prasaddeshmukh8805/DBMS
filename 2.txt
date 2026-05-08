@@ -1,0 +1,58 @@
+CREATE DATABASE OnlineShoppingDB;
+
+USE OnlineShoppingDB;
+
+CREATE TABLE Customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    city VARCHAR(50)
+);
+
+CREATE TABLE Products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(50) NOT NULL,
+    price INT CHECK (price > 0),
+    stock INT
+);
+
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    product_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES Customers(customer_id),
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+
+INSERT INTO Customers VALUES
+(1, 'Rahul', 'rahul@gmail.com', 'Nashik'),
+(2, 'Priya', 'priya@gmail.com', 'Pune'),
+(3, 'Amit', 'amit@gmail.com', 'Mumbai'),
+(4, 'Sneha', 'sneha@gmail.com', 'Nagpur'),
+(5, 'Rohit', 'rohit@gmail.com', 'Aurangabad');
+
+INSERT INTO Products VALUES
+(101, 'Laptop', 50000, 10),
+(102, 'Mobile', 20000, 15),
+(103, 'Headphones', 3000, 25),
+(104, 'Keyboard', 1500, 20),
+(105, 'Mouse', 800, 30);
+
+INSERT INTO Orders VALUES
+(1001, 1, 101, '2026-01-10'),
+(1002, 2, 102, '2026-01-11'),
+(1003, 3, 103, '2026-01-12'),
+(1004, 4, 104, '2026-01-13'),
+(1005, 5, 105, '2026-01-14');
+
+ALTER TABLE Products
+ADD discount INT;
+
+RENAME TABLE Orders TO Customer_Orders;
+
+CREATE TABLE TempTable (
+    id INT
+);
+
+DROP TABLE TempTable;
